@@ -3,8 +3,8 @@ Meetings API allows you to easily integrate real-time, high-quality interactive 
 
 ### Requirements 
 
-**Vonage Developer Account**: if you don’t have a Vonage account yet, you can get one [here](https://dashboard.nexmo.com/). 
-**API Key and Secret**: Once you’re logged in, you'll find your API Key and Secret in your dashboard under "Getting Started." 
+- **Vonage Developer Account**: if you don’t have a Vonage account yet, you can get one [here](https://dashboard.nexmo.com/). 
+- **API Key and Secret**: Once you’re logged in, you'll find your API Key and Secret in your dashboard under "Getting Started." 
 
 ### Basic Terminology
 - **Room**: the virtual space in which the video meeting takes place
@@ -27,7 +27,7 @@ Once the last participant leaves the room, the room lives for ten more minutes, 
 A long term room remains alive until expiration date (max five years). It is typically linked to a recurring meeting, person, or resource. 
 It requires an expiration date (in UTC format), and has the option of automatically deleting the room ten minutes after the last participant leaves the room. 
 
->> A room that has expired will be set to `is_available` = false. 
+> A room that has expired will be set to `is_available` = false. 
 
 ## Default Room Creation
 
