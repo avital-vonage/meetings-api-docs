@@ -8,11 +8,11 @@ Meetings API allows you to easily integrate real-time, high-quality interactive 
 
 ### Basic Terminology
 - **Room**: the virtual space in which the video meeting takes place
-- **Owner**: usually the creator of the room; this is the user with specific admin capabilities
+- **Owner**: usually the creator of the room; this user has special admin capabilities
 - **Chat**: space for sending written messages that are visible to all attendees in the room
 - **Guest URL**: meeting room URL used by the guest 
-- **Host URL**: meeting room URL with additional capabilities used by the owner 
-- **Session**: the presence of one or more attendees within a room 
+- **Host URL**: meeting room URL with additional capabilities used by the owner // Not necessarily used by the owner, can also be a proxy of the owner.
+- **Session**: the presence of one or more attendees within a room  // This is not really clear IMO. Should be more explicit that a session has a beginning and an end.
 
 ### Room Types 
 
@@ -27,13 +27,13 @@ Once the last participant leaves the room, the room lives for ten more minutes, 
 A long term room remains alive until expiration date (max five years). It is typically linked to a recurring meeting, person, or resource. 
 It requires an expiration date (in UTC format), and has the option of automatically deleting the room ten minutes after the last participant leaves the room. 
 
-> A room that has expired will be set to `is_available` = false. 
+> A room that has expired will be set to `is_available` = false. // It's not really clear how this connects to the deletion of the room, which was mentioned in the previous paragraph.
 
 ## Default Room Creation
 
 The (POST) endpoint for creating a meeting room: 
 
-```https://api-eu.vonage.com/beta/meetings/rooms```
+```https://api-eu.vonage.com/beta/meetings/rooms``` //do we want to give eu specifically here?
 
 
 ### Required Headers
@@ -45,10 +45,10 @@ The (POST) endpoint for creating a meeting room:
 ### Body 
 
 - `display_name`: (required) the name of the meeting room 
-- `metadata`: metadata for the meeting room 
+- `metadata`: metadata for the meeting room // Maybe should say a bit more about this, like the fact that this is attached to all callbacks
 - `type`: `instant` or `long_term`. 
 - `expires_at`: (required for `long_term` type) room expiration date in UTC Format
-- `recording_options`: object containing various meeting recording options, such`auto_record` (boolean). 
+- `recording_options`: object containing various meeting recording options, such as `auto_record` (boolean). // why not specify all available options?
 
 ## Example Room Creation 
 
