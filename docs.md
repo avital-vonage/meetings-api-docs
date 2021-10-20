@@ -1,18 +1,19 @@
 ## What is the Meetings API? 
 Meetings API allows you to easily integrate real-time, high-quality interactive video meetings into your web apps.  
 
-### Requirements 
+## Requirements 
 
 - **Vonage Developer Account**: if you don’t have a Vonage account yet, you can get one [here](https://dashboard.nexmo.com/). 
 - **API Key and Secret**: Once you’re logged in, you'll find your API Key and Secret in your dashboard under "Getting Started." 
 
-### Basic Terminology
+## Basic Terminology
+
 - **Room**: the virtual space in which the video meeting takes place
-- **Owner**: usually the creator of the room; this is the user with specific admin capabilities
+- **Owner**: usually the creator of the room; this user has special admin capabilities
 - **Chat**: space for sending written messages that are visible to all attendees in the room
 - **Guest URL**: meeting room URL used by the guest 
-- **Host URL**: meeting room URL with additional capabilities used by the owner 
-- **Session**: the presence of one or more attendees within a room 
+- **Host URL**: meeting room URL with additional capabilities used by the session host  
+- **Session**: the duration in which there are participants present in the room, from the first participant to join, until the last to leave.  
 
 ### Room Types 
 
@@ -26,14 +27,13 @@ Once the last participant leaves the room, the room lives for ten more minutes, 
 
 A long term room remains alive until expiration date (max five years). It is typically linked to a recurring meeting, person, or resource. 
 It requires an expiration date (in UTC format), and has the option of automatically deleting the room ten minutes after the last participant leaves the room. 
+Note that once a room that has been deleted, it will be set to `is_available` = false. 
 
-> A room that has expired will be set to `is_available` = false. 
-
-## Default Room Creation
+## Room Creation
 
 The (POST) endpoint for creating a meeting room: 
 
-```https://api-eu.vonage.com/beta/meetings/rooms```
+```https://api.vonage.com/beta/meetings/rooms```
 
 
 ### Required Headers
@@ -45,10 +45,11 @@ The (POST) endpoint for creating a meeting room:
 ### Body 
 
 - `display_name`: (required) the name of the meeting room 
-- `metadata`: metadata for the meeting room 
+- `metadata`: metadata that will be included in all callbacks 
 - `type`: `instant` or `long_term`. 
 - `expires_at`: (required for `long_term` type) room expiration date in UTC Format
-- `recording_options`: object containing various meeting recording options, such`auto_record` (boolean). 
+- `recording_options`: object containing various meeting recording options: 
+    - `auto_record` (boolean): sets whether the session will be recorded 
 
 ## Example Room Creation 
 
@@ -95,6 +96,8 @@ Notice that an **instant room** has been created by default, which means that th
 
 ### Request 
 
+We will create a long term room that expires on October 21st of 2022, for which each session will be recorded 
+
 ```
 curl --request POST 'https://api-eu.vonage.com/beta/meetings/rooms' \
 --header 'authorization: basic YWFhMDEyOmFiYzEyMzQ1Njc4OQ==' \
@@ -102,7 +105,9 @@ curl --request POST 'https://api-eu.vonage.com/beta/meetings/rooms' \
 --data-raw '{
    "display_name":"New Meeting Room",
    "type":"long_term",
-   "expires_at":"2021-10-21T18:45:50.901Z"
+   "expires_at":"2022-10-21T18:45:50.901Z", 
+   "recording_options": {
+       "auto_record": true}
 }'
 ```
 
@@ -114,9 +119,9 @@ curl --request POST 'https://api-eu.vonage.com/beta/meetings/rooms' \
     "display_name": "New Meeting Room",
     "metadata": null,
     "type": "long_term",
-    "expires_at": "2021-10-21T18:45:50.901Z",
+    "expires_at": "2022-10-21T18:45:50.901Z",
     "recording_options": {
-        "auto_record": false
+        "auto_record": true
     },
     "meeting_code": "117744699",
     "_links": {
@@ -131,3 +136,25 @@ curl --request POST 'https://api-eu.vonage.com/beta/meetings/rooms' \
     "is_available": true
 }
 ```
+
+## Individual Room Retrieval 
+
+Notice the ID received in the response. This the ID of the room which will be used for room retrieval. 
+
+```
+curl --request GET 'https://api-eu.vonage.com/beta/meetings/rooms/b731a3a9-5552-410b-8d5e-72eac07cb45d' \
+--header 'authorization: basic YWFhMDEyOmFiYzEyMzQ1Njc4OQ==' \
+--header 'content-type: application/json' 
+
+```
+The response will be identical to that of the room creation. 
+
+To retrieve all rooms, omit the meeting room ID. 
+
+```
+curl --location --request GET 'https://api-eu.vonage.com/beta/meetings/rooms/' \
+--header 'authorization: basic MTFmMWI4NGY6UnVpbnJIMWxneGZXNGJibQ==' \
+--header 'content-type: application/json'
+```
+
+
