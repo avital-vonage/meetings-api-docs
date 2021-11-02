@@ -45,7 +45,7 @@ The (POST) endpoint for creating a meeting room:
 ### Body 
 
 - `display_name`: (required) the name of the meeting room 
-- `metadata`: metadata that will be included in all callbacks 
+- `metadata`: metadata that will be included in all [callbacks](#Callbacks)
 - `type`: `instant` or `long_term`. 
 - `expires_at`: (required for `long_term` type) room expiration date in UTC Format
 - `recording_options`: object containing various meeting recording options: 
@@ -63,6 +63,8 @@ curl --request POST 'https://api-eu.vonage.com/beta/meetings/rooms' \
    "display_name":"New Meeting Room"
 }'
 ```
+
+
 
 ### Response 
 
@@ -137,7 +139,9 @@ curl --request POST 'https://api-eu.vonage.com/beta/meetings/rooms' \
 }
 ```
 
-## Individual Room Retrieval 
+## Room Retrieval 
+
+### Individual Room Retrieval 
 
 Notice the ID received in the response. This the ID of the room which will be used for room retrieval. 
 
@@ -145,9 +149,10 @@ Notice the ID received in the response. This the ID of the room which will be us
 curl --request GET 'https://api-eu.vonage.com/beta/meetings/rooms/b731a3a9-5552-410b-8d5e-72eac07cb45d' \
 --header 'authorization: basic YWFhMDEyOmFiYzEyMzQ1Njc4OQ==' \
 --header 'content-type: application/json' 
-
 ```
 The response will be identical to that of the room creation. 
+
+### Retrieve all rooms 
 
 To retrieve all rooms, omit the meeting room ID. 
 
@@ -155,6 +160,54 @@ To retrieve all rooms, omit the meeting room ID.
 curl --location --request GET 'https://api-eu.vonage.com/beta/meetings/rooms/' \
 --header 'authorization: basic MTFmMWI4NGY6UnVpbnJIMWxneGZXNGJibQ==' \
 --header 'content-type: application/json'
+```
+
+
+## Callbacks 
+
+API meetings callbacks allows you to receive information about session events, participant activity, recording details, and room expiration. To register for callbacks, please be in touch with us at meetings-api@vonage.com. 
+
+
+### Types of Callbacks
+
+- **Room Expired** (`room-expired`): A notification about a room becoming inactive, which means sessions can no longer be created for it
+- **Session Started** (`session-started`): A notification about a newly started session
+- **Session Ended** (`session-ended`): A notification about a session that has just ended 
+- **Recording Started** (`recording-started`): A notification about a recording beginning within a session 
+- **Recording Ended** (`recording-ended`): A notification about a recording being stopped within a session 
+- **Recording Ready** (`recording-ready`): A notification that a recording is ready to be downloaded 
+- **Participant Joined** (`participant-joined`): A notification about someone entering a session 
+- **Participant Left** (`participant-left`): A notification about someone leaving a session 
+
+### Example Payloads 
+
+```
+{
+    "event": "session:started",
+    "session_id": "2_MX40NjMzOTg5Mn5-MTYzNTg2ODQwODY4NH41cXIzMDdSa1BZa05BUDFpYnhxcTV4MCt-fg",
+    "room_id": "b307d837-c0ce-4619-8c5c-70e418ef9693",
+    "started_at": "2021-11-02T15:53:28.753Z"
+}
+```
+
+```
+{
+    "event": "session:participant:joined",
+    "participant_id": "b424e1c4-e988-4ce2-8ab9-e3efea7de542",
+    "session_id": "2_MX40NjMzOTg5Mn5-MTYzNTg2ODQwODY4NH41cXIzMDdSa1BZa05BUDFpYnhxcTV4MCt-fg",
+    "room_id": "b307d837-c0ce-4619-8c5c-70e418ef9693",
+    "name": "Avital",
+    "type": "Guest",
+    "is_host": true
+}
+```
+
+```
+{
+    "event": "recording:started",
+    "recording_id": "17461b93-f793-48a0-9392-7d82de40432f",
+    "session_id": "2_MX40NjMzOTg5Mn5-MTYzNTg2ODUxNzIzNH5mOUVub3hPNCt6czlwQzdvaTYvbm5lOTN-fg"
+}
 ```
 
 
