@@ -206,17 +206,15 @@ API meetings callbacks allows you to receive information about session events, p
 
 ### Example Payloads 
 
+### Session Started
 ```
-{
     "event": "session:started",
     "session_id": "2_MX40NjMzOTg5Mn5-MTYzNTg2ODQwODY4NH41cXIzMDdSa1BZa05BUDFpYnhxcTV4MCt-fg",
     "room_id": "b307d837-c0ce-4619-8c5c-70e418ef9693",
     "started_at": "2021-11-02T15:53:28.753Z"
-}
 ```
-
+#### Participant Joined
 ```
-{
     "event": "session:participant:joined",
     "participant_id": "b424e1c4-e988-4ce2-8ab9-e3efea7de542",
     "session_id": "2_MX40NjMzOTg5Mn5-MTYzNTg2ODQwODY4NH41cXIzMDdSa1BZa05BUDFpYnhxcTV4MCt-fg",
@@ -224,19 +222,17 @@ API meetings callbacks allows you to receive information about session events, p
     "name": "Avital",
     "type": "Guest",
     "is_host": true
-}
 ```
 
+#### Recording Started
 ```
-{
     "event": "recording:started",
     "recording_id": "17461b93-f793-48a0-9392-7d82de40432f",
     "session_id": "2_MX40NjMzOTg5Mn5-MTYzNTg2ODUxNzIzNH5mOUVub3hPNCt6czlwQzdvaTYvbm5lOTN-fg"
-}
 ```
 
+#### Recording Uploaded
 ```
-{
     "event": "recording:uploaded",
     "recording_id": "17461b93-f793-48a0-9392-7d82de40432f",
     "session_id": "2_MX40NjMzOTg5Mn5-MTYzNTg2ODUxNzIzNH5mOUVub3hPNCt6czlwQzdvaTYvbm5lOTN-fg",
@@ -244,7 +240,6 @@ API meetings callbacks allows you to receive information about session events, p
     "ended_at": "2021-11-02T15:56:13.000Z",
     "duration": 38,
     "url": "https://prod-meetings-recordings.s3.amazonaws.com/46339892/17461b93-f793-48a0-9392-7d82de40432f/archive.mp4?..."
-}
 ```
 
 ## Recordings 
