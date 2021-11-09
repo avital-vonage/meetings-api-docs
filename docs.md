@@ -245,6 +245,7 @@ API meetings callbacks allows you to receive information about session events, p
     "duration": 38,
     "url": "https://prod-meetings-recordings.s3.amazonaws.com/46339892/17461b93-f793-48a0-9392-7d82de40432f/archive.mp4?..."
 }
+```
 
 ## Recordings 
 
