@@ -206,7 +206,7 @@ API meetings callbacks allows you to receive information about session events, p
 
 ### Example Payloads 
 
-### Session Started
+#### Session Started
 ```
     "event": "session:started",
     "session_id": "2_MX40NjMzOTg5Mn5-MTYzNTg2ODQwODY4NH41cXIzMDdSa1BZa05BUDFpYnhxcTV4MCt-fg",
